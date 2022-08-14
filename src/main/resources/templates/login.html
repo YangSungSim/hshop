@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <title>Spring Security</title>
+    <script>
+        function login() {
+            let data = {name: document.getElementById("name").value, password: document.getElementById("password").value};
+
+            fetch('api/v1/authenticates', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(myJson) {
+                    sessionStorage.setItem("jwt", "Bearer " + myJson.result.token);
+                    const base64Url = myJson.result.token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    sessionStorage.setItem("auth", JSON.parse(jsonPayload).auth);
+                    sessionStorage.setItem("exp", JSON.parse(jsonPayload).exp);
+                    window.location.href = "/hello";
+                });
+        }
+    </script>
+</head>
+<body class="text-center">
+<div class="form-signin"> <!-- 요청 보내기-->
+    <h1 class="h3 mb-3 font-weight-normal">login을 해보자</h1>
+
+    <div th:if="${param.error}"  class="alert alert-danger" role="alert">
+        Invalid username and password
+    </div>
+
+    <div th:if="${param.logout}"  class="alert alert-primary" role="alert">
+        You have been logged out
+    </div>
+
+    <div class="login-form">
+        <form role="form" th:action="@{/api/v1/accounts/login}" th:object="${loginForm}" method="post">
+            <h2 class="text-center">Sign in</h2>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input
+                        id="name" type="text" class="form-control" th:field="*{name}"
+                        placeholder="Name" />
+
+                </div>
+                <span class="red" th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input
+                        id="password" type="password" class="form-control" th:field="*{password}"
+                        placeholder="Password" />
+
+                </div>
+                <span class="red" th:if="${#fields.hasErrors('password')}"
+                      th:errors="*{password}"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary login-btn btn-block" onclick="login()">Sign
+                    in</button>
+            </div>
+        </form>
+    </div>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    <button onclick="window.location.href='/sign'">회원가입</button>
+</div>
+</body>
