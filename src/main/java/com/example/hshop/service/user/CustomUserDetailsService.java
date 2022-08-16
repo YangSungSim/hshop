@@ -47,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         return new User(
-                String.valueOf(account.getId()),
+                String.valueOf(account.getName()),
                 account.getPassword(),
                 authorities
         );

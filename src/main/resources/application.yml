@@ -38,3 +38,11 @@ components:
       bearerFormat: JWT
 security:
   - bearerAuth: []
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
