@@ -4,11 +4,13 @@ import com.example.hshop.domain.place.Place;
 import com.example.hshop.domain.place.Reservation;
 import com.example.hshop.domain.user.Account;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Date;
 
 @Getter
+@Builder
 public class ReservationSaveRequestDto {
     @Schema(description = "장소 id")
     private Long placeId;

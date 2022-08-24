@@ -27,6 +27,7 @@ public class AccountService {
     private static final String ACCOUNT_NULL = "해당하는 유저가 없습니다.";
     @Transactional(readOnly = true)
     public Account login(LoginForm loginForm) {
+        System.out.println("username:LLLL " + loginForm.getName());
         return accountRepository.findOneWithAuthoritiesByName(loginForm.getName()).orElse(null);
     }
 
