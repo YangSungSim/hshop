@@ -36,11 +36,11 @@ public class Reservation {
     @Column(length = 3, columnDefinition = "INT DEFAULT 0")
     private int state;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Place place;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Account account;
 

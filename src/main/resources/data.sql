@@ -20,3 +20,6 @@ insert into reservation(place_id, account_id, reserve_at) values (1, 2, now());
 
 insert into place_reservation(place_id, reservation_id) values (1, 1);
 insert into place_reservation(place_id, reservation_id) values (1, 2);
+
+insert into style(hair_len, last_pc, hair_line, plenty, texture, health, color, photo, shoulder, neck, comment, account_id) values (1, 1, 1, 1, 1, 1, 'Y', 1, 1, 1, 'comment', 1);
+insert into style(hair_len, last_pc, hair_line, plenty, texture, health, color, photo, shoulder, neck, comment, account_id) values (1, 1, 1, 1, 1, 1, 'Y', 1, 1, 1, 'comment', 2);

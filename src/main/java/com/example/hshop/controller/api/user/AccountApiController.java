@@ -90,7 +90,7 @@ public class AccountApiController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("list")
-    @Operation(summary = "회원 자신의 정보 조회")
+    @Operation(summary = "회원 모두의 정보 조회")
     public ResponseEntity<ResultDto> findAll() {
         log.info("/api/v1/accounts/list get controller");
         List<Account> account =accountService.findAll();
@@ -103,7 +103,7 @@ public class AccountApiController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("{id}")
-    @Operation(summary = "회원 정보 조회")
+    @Operation(summary = "특정 회원 정보 조회")
     @Parameter(name = "id", required = true, example = "0")
     public ResponseEntity<ResultDto> findById(@PathVariable Long id) {
         log.info("/api/v1/account/{id} get controller");
